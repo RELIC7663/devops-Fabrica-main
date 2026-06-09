@@ -1,0 +1,10 @@
+﻿.git
+.github
+target
+*.md
+.gitignore
+k8s
+terraform
+monitoring
+security
+docs

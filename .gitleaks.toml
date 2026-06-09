@@ -1,0 +1,5 @@
+title = "Gitleaks Configuration"
+
+[allowlist]
+  description = "Allow test and example files"
+  paths = ['''test''', '''docs''']
