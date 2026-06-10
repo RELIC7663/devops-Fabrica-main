@@ -81,9 +81,9 @@ jobs:
       # CORREGIDO: Se cambió github.repository por env.IMAGE_NAME en los tags y pushes
       - name: Push image to GHCR
         run: |
-          docker tag ghcr.io/${{ env.IMAGE_NAMEasd }}:${{ github.sha }} ghcr.io/${{ env.IMAGE_NAME }}:latest
-          docker push ghcr.io/${{ env.IMAGE_NAMEasd }}:${{ github.sha }}
-          docker push ghcr.io/${{ env.IMAGE_NAMEasd }}:latest
+          docker tag ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} ghcr.io/${{ env.IMAGE_NAME }}:latest
+          docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}:latest
 
 
 
