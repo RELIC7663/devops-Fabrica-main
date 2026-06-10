@@ -17,15 +17,29 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 99.0 },
-              { "color": "green", "value": 99.9 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 99.0
+              },
+              {
+                "color": "green",
+                "value": 99.9
+              }
             ]
           },
           "unit": "percent"
         }
       },
-      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 0 }
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "title": "P99 Latency (SLO: < 500ms)",
@@ -42,21 +56,44 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 300 },
-              { "color": "red", "value": 500 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 300
+              },
+              {
+                "color": "red",
+                "value": 500
+              }
             ]
           },
           "unit": "ms"
         }
       },
-      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 0 }
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      }
     },
     {
       "title": "Request Rate (req/s)",
       "type": "timeseries",
-      "targets": [{"expr": "sum(rate(http_server_requests_seconds_count[5m]))"}],
-      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_count[5m]))"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      }
     },
     {
       "title": "Error Rate Over Time (5xx %)",
@@ -71,19 +108,39 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "red", "value": 0.1 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0.1
+              }
             ]
           }
         }
       },
-      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      }
     },
     {
       "title": "Pod Count",
       "type": "stat",
-      "targets": [{"expr": "count(kube_pod_info{namespace=\"default\", pod=~\"petclinic.*\"})"}],
-      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      "targets": [
+        {
+          "expr": "count(kube_pod_info{namespace=\"default\", pod=~\"petclinic.*\"})"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      }
     },
     {
       "title": "Application Logs (trace_id search)",
@@ -94,9 +151,17 @@
           "datasource": "Loki"
         }
       ],
-      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 16 }
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      }
     }
   ],
-  "time": {"from": "now-1h", "to": "now"},
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
   "refresh": "10s"
 }
