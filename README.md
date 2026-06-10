@@ -1,7 +1,3 @@
-# Proyecto DevOps - PetClinic
-
-![CI Pipeline](https://github.com/alexlunamayo2002-netizen/proyecto-devops/actions/workflows/ci.yml/badge.svg)
-![CD Pipeline](https://github.com/alexlunamayo2002-netizen/proyecto-devops/actions/workflows/cd.yml/badge.svg)
 
 ## Arquitectura del Proyecto
 
@@ -80,13 +76,20 @@ kubectl apply -f k8s/
 cd terraform && terraform init && terraform plan
 ```
 
-## Autores
-- Equipo proyecto-devops - Fabrica de Software 8vo Nivel
 
-<!-- demo live -->
+## Observabilidad y SLOs
 
-<!-- demo live test -->
+Para cumplir con los objetivos de nivel de servicio (SLO), hemos definido los siguientes indicadores (SLI):
 
-<!-- Prueba demo -->
+*   **Disponibilidad (Availability)**: 
+    *   **SLI**: Porcentaje de respuestas HTTP exitosas (no 5xx) frente al total de peticiones en los últimos 5 minutos.
+    *   **SLO**: **99.9%** de disponibilidad constante.
+*   **Latencia (Latency)**: 
+    *   **SLI**: Tiempo de respuesta para el percentil 99 (P99).
+    *   **SLO**: Menos de **500ms** para el 99% de las peticiones.
 
-<!-- Crear Demo en vivo -->
+Se ha configurado Prometheus y Grafana para visualizar estas métricas en un **SLO Dashboard**. Adicionalmente, las alertas de Prometheus se disparan cuando:
+1.  La tasa de errores supera el 0.1% durante 5 minutos (riesgo para el SLO de Disponibilidad).
+2.  La latencia P99 supera los 500ms durante 5 minutos (riesgo para el SLO de Latencia).
+
+Para los logs, la aplicación expone métricas y registros con `trace_id` para correlacionar eventos a lo largo de los servicios, y se visualizan a través del panel de logs en Grafana.

@@ -1,33 +1,102 @@
-﻿{
-  "dashboard": {
-    "title": "PetClinic SLO Dashboard",
-    "panels": [
-      {
-        "title": "Request Rate (req/s)",
-        "type": "timeseries",
-        "targets": [{"expr": "rate(http_server_requests_seconds_count[5m])"}],
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+{
+  "title": "PetClinic SLO Dashboard",
+  "description": "Visualización de SLI y SLO de la aplicación PetClinic",
+  "panels": [
+    {
+      "title": "Availability (SLO: 99.9%)",
+      "type": "gauge",
+      "targets": [
+        {
+          "expr": "100 - (sum(rate(http_server_requests_seconds_count{status=~\"5..\"}[5m])) / sum(rate(http_server_requests_seconds_count[5m])) * 100)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 95,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 99.0 },
+              { "color": "green", "value": 99.9 }
+            ]
+          },
+          "unit": "percent"
+        }
       },
-      {
-        "title": "Error Rate (5xx %)",
-        "type": "timeseries",
-        "targets": [{"expr": "rate(http_server_requests_seconds_count{status=~\"5..\"}[5m]) / rate(http_server_requests_seconds_count[5m]) * 100"}],
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 0 }
+    },
+    {
+      "title": "P99 Latency (SLO: < 500ms)",
+      "type": "gauge",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(http_server_requests_seconds_bucket[5m]))) * 1000"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 1000,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 300 },
+              { "color": "red", "value": 500 }
+            ]
+          },
+          "unit": "ms"
+        }
       },
-      {
-        "title": "Response Time P99 (ms)",
-        "type": "timeseries",
-        "targets": [{"expr": "histogram_quantile(0.99, rate(http_server_requests_seconds_bucket[5m])) * 1000"}],
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 0 }
+    },
+    {
+      "title": "Request Rate (req/s)",
+      "type": "timeseries",
+      "targets": [{"expr": "sum(rate(http_server_requests_seconds_count[5m]))"}],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+    },
+    {
+      "title": "Error Rate Over Time (5xx %)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_count{status=~\"5..\"}[5m])) / sum(rate(http_server_requests_seconds_count[5m])) * 100"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 0.1 }
+            ]
+          }
+        }
       },
-      {
-        "title": "Pod Count",
-        "type": "stat",
-        "targets": [{"expr": "count(kube_pod_info{namespace=\"default\", pod=~\"petclinic.*\"})"}],
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
-      }
-    ],
-    "time": {"from": "now-1h", "to": "now"},
-    "refresh": "10s"
-  }
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+    },
+    {
+      "title": "Pod Count",
+      "type": "stat",
+      "targets": [{"expr": "count(kube_pod_info{namespace=\"default\", pod=~\"petclinic.*\"})"}],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+    },
+    {
+      "title": "Application Logs (trace_id search)",
+      "type": "logs",
+      "targets": [
+        {
+          "expr": "{app=\"petclinic\"} |= \"\"",
+          "datasource": "Loki"
+        }
+      ],
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 16 }
+    }
+  ],
+  "time": {"from": "now-1h", "to": "now"},
+  "refresh": "10s"
 }
