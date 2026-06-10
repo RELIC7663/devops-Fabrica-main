@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
         - name: petclinic
-          image: ghcr.io/alexlunamayo2002-netizen/proyecto-devops:latest
+          image: petclinic-devops:local
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
           envFrom:

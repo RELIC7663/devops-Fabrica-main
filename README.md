@@ -71,6 +71,8 @@ devops-Fabrica-main/
 │
 ├── docs/
 │
+
+
 ├── k8s/
 │   ├── configmap.yaml
 │   ├── deployment.yaml

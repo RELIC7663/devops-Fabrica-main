@@ -15,6 +15,7 @@ groups:
           summary: "Alta tasa de errores (Caída de Disponibilidad)"
           description: "La tasa de errores HTTP 5xx supera el 0.1% en los últimos 5 minutos. El SLO de Disponibilidad está en riesgo."
           
+          
       - alert: HighLatency
         expr: |
           histogram_quantile(0.99, sum by (le) (rate(http_server_requests_seconds_bucket[5m]))) * 1000 > 500
