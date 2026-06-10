@@ -9,8 +9,8 @@ La solución integra prácticas de **CI/CD**, contenedores Docker, despliegue en
 
 ## Integrantes
 
-* Johanna
-* [Nombre del compañero]
+* Johanna Puerchambud
+* Hugo Pepinosa
 
 ---
 
